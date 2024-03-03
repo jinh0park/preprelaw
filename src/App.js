@@ -99,218 +99,227 @@ function App() {
 
   return (
     <MainContainer>
-      <Container maxWidth="sm">
-        <Grid container alignItems="flex-end">
-          <Grid item xs={9}>
-            <h1 style={{ margin: 0, userSelect: "none", color: "#333333" }}>
-              Pre-Pre-LAW
-            </h1>
+      <Container maxWidth="lg">
+        <Grid container spacing={2}>
+          <Grid item xs={12}>
+            <Grid container alignItems="flex-end">
+              <Grid item xs={9}>
+                <h1 style={{ margin: 0, userSelect: "none", color: "#333333" }}>
+                  Pre-Pre-LAW
+                </h1>
+              </Grid>
+              <Grid item xs={3} textAlign="right">
+                <InputLabel variant="standard" htmlFor="year">
+                  연도
+                </InputLabel>
+                <NativeSelect value={year} name="year" onChange={onChange}>
+                  <option value={2024}>2024</option>
+                  <option value={2023}>2023</option>
+                </NativeSelect>
+              </Grid>
+            </Grid>
           </Grid>
-          <Grid item xs={3}>
-            <InputLabel variant="standard" htmlFor="year">
-              연도
-            </InputLabel>
-            <NativeSelect value={year} name="year" onChange={onChange}>
-              <option value={2024}>2024</option>
-              <option value={2023}>2023</option>
-            </NativeSelect>
+          <Grid item xs={12} md={6}>
+            <Accordion defaultExpanded>
+              <AccordionSummary expandIcon={<ExpandMoreIcon />}>
+                <Typography>
+                  LEET : {(eonScore + chuScore).toFixed(1)}점
+                </Typography>
+              </AccordionSummary>
+              <AccordionDetails>
+                <Grid container spacing={2}>
+                  <Grid item xs={6}>
+                    <TextField
+                      label="언어이해 백분위"
+                      disabled
+                      type="number"
+                      name="eonPer"
+                      step="0.1"
+                      value={eonPer}
+                      onChange={onChange}
+                    />
+                  </Grid>
+                  <Grid item xs={6}>
+                    <TextField
+                      label="언어이해 표준점수"
+                      disabled
+                      type="number"
+                      name="eonScore"
+                      step="0.1"
+                      value={eonScore}
+                      onChange={onChange}
+                    />
+                  </Grid>
+                  <Grid item xs={12}>
+                    <Slider
+                      name="eonN"
+                      defaultValue={20}
+                      step={1}
+                      min={eonNMin}
+                      max={30}
+                      value={eonN}
+                      onChange={onChange}
+                      marks={[
+                        { value: eonNMin, label: eonNMin },
+                        { value: 30, label: 30 },
+                      ]}
+                      valueLabelDisplay="on"
+                    />
+                  </Grid>
+                  <Grid item xs={6}>
+                    <TextField
+                      label="추리논증 백분위"
+                      disabled
+                      type="number"
+                      name="chuPer"
+                      step="0.1"
+                      value={chuPer}
+                      onChange={onChange}
+                    />
+                  </Grid>{" "}
+                  <Grid item xs={6}>
+                    <TextField
+                      label="추리논증 표준점수"
+                      disabled
+                      type="number"
+                      name="chuScore"
+                      step="0.1"
+                      value={chuScore}
+                      onChange={onChange}
+                    />
+                  </Grid>
+                  <Grid item xs={12}>
+                    <Slider
+                      name="chuN"
+                      defaultValue={30}
+                      step={1}
+                      min={chuNMin}
+                      max={40}
+                      value={chuN}
+                      onChange={onChange}
+                      marks={[
+                        { value: chuNMin, label: chuNMin },
+                        { value: 40, label: 40 },
+                      ]}
+                      valueLabelDisplay="on"
+                    />
+                  </Grid>
+                </Grid>
+              </AccordionDetails>
+            </Accordion>
+            <Accordion defaultExpanded>
+              <AccordionSummary expandIcon={<ExpandMoreIcon />}>
+                <Typography>학점 : {gpa.toFixed(1)}</Typography>
+              </AccordionSummary>
+              <AccordionDetails>
+                <Grid container spacing={2}>
+                  <Grid item xs={12}>
+                    <Slider
+                      name="gpa"
+                      defaultValue={95}
+                      step={0.1}
+                      min={85}
+                      max={100}
+                      value={gpa}
+                      onChange={onChange}
+                      marks={[
+                        { value: 85, label: 85 },
+                        { value: 100, label: 100 },
+                      ]}
+                      valueLabelDisplay="on"
+                      color="secondary"
+                    />
+                  </Grid>
+                </Grid>
+              </AccordionDetails>
+            </Accordion>
+          </Grid>
+          <Grid item xs={12} md={6}>
+            <Accordion defaultExpanded>
+              <AccordionSummary expandIcon={<ExpandMoreIcon />}>
+                <Typography>학교별 환산 결과</Typography>
+              </AccordionSummary>
+              <AccordionDetails>
+                <Grid container spacing={2}>
+                  <SchoolSummary
+                    year={year}
+                    school="SEOUL"
+                    score={hwansan.SEOUL}
+                  ></SchoolSummary>
+                  <SchoolSummary
+                    year={year}
+                    school="YONSEI"
+                    score={hwansan.YONSEI}
+                  ></SchoolSummary>
+                  <SchoolSummary
+                    year={year}
+                    school="KOREA"
+                    score={hwansan.KOREA}
+                  ></SchoolSummary>
+                  <Grid item xs={12}>
+                    <p style={{ fontSize: "0.7rem" }}>※ 일반전형 기준</p>
+                  </Grid>
+                </Grid>
+              </AccordionDetails>
+            </Accordion>
+
+            <Accordion>
+              <AccordionSummary expandIcon={<ExpandMoreIcon />}>
+                <Typography>학교별 환산 결과 상세</Typography>
+              </AccordionSummary>
+              <AccordionDetails>
+                <Grid container spacing={2}>
+                  <SchoolDetail
+                    score={hwansan.SEOUL}
+                    year={year}
+                    school="SEOUL"
+                  ></SchoolDetail>
+                  <SchoolDetail
+                    score={hwansan.YONSEI}
+                    year={year}
+                    school="YONSEI"
+                  ></SchoolDetail>
+                  <SchoolDetail
+                    score={hwansan.KOREA}
+                    year={year}
+                    school="KOREA"
+                  ></SchoolDetail>
+                </Grid>
+              </AccordionDetails>
+            </Accordion>
           </Grid>
         </Grid>
-
-        <Accordion defaultExpanded>
-          <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-            <Typography>LEET : {(eonScore + chuScore).toFixed(1)}점</Typography>
-          </AccordionSummary>
-          <AccordionDetails>
-            <Grid container spacing={2}>
-              <Grid item xs={6}>
-                <TextField
-                  label="언어이해 백분위"
-                  disabled
-                  type="number"
-                  name="eonPer"
-                  step="0.1"
-                  value={eonPer}
-                  onChange={onChange}
-                />
-              </Grid>
-              <Grid item xs={6}>
-                <TextField
-                  label="언어이해 표준점수"
-                  disabled
-                  type="number"
-                  name="eonScore"
-                  step="0.1"
-                  value={eonScore}
-                  onChange={onChange}
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <Slider
-                  name="eonN"
-                  defaultValue={20}
-                  step={1}
-                  min={eonNMin}
-                  max={30}
-                  value={eonN}
-                  onChange={onChange}
-                  marks={[
-                    { value: eonNMin, label: eonNMin },
-                    { value: 30, label: 30 },
-                  ]}
-                  valueLabelDisplay="on"
-                />
-              </Grid>
-              <Grid item xs={6}>
-                <TextField
-                  label="추리논증 백분위"
-                  disabled
-                  type="number"
-                  name="chuPer"
-                  step="0.1"
-                  value={chuPer}
-                  onChange={onChange}
-                />
-              </Grid>{" "}
-              <Grid item xs={6}>
-                <TextField
-                  label="추리논증 표준점수"
-                  disabled
-                  type="number"
-                  name="chuScore"
-                  step="0.1"
-                  value={chuScore}
-                  onChange={onChange}
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <Slider
-                  name="chuN"
-                  defaultValue={30}
-                  step={1}
-                  min={chuNMin}
-                  max={40}
-                  value={chuN}
-                  onChange={onChange}
-                  marks={[
-                    { value: chuNMin, label: chuNMin },
-                    { value: 40, label: 40 },
-                  ]}
-                  valueLabelDisplay="on"
-                />
-              </Grid>
+        <Grid item xs={12}>
+          <Grid container justifyContent="center" alignItems="flex-end">
+            <Grid item xs={4}>
+              <p style={{ textAlign: "center" }}>
+                <Link
+                  underline="none"
+                  href="https://jinh0park.github.io"
+                  target="_blank"
+                >
+                  만든이
+                </Link>
+              </p>
             </Grid>
-          </AccordionDetails>
-        </Accordion>
-        <Accordion defaultExpanded>
-          <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-            <Typography>학점 : {gpa.toFixed(1)}</Typography>
-          </AccordionSummary>
-          <AccordionDetails>
-            <Grid container spacing={2}>
-              <Grid item xs={12}>
-                <Slider
-                  name="gpa"
-                  defaultValue={95}
-                  step={0.1}
-                  min={85}
-                  max={100}
-                  value={gpa}
-                  onChange={onChange}
-                  marks={[
-                    { value: 85, label: 85 },
-                    { value: 100, label: 100 },
-                  ]}
-                  valueLabelDisplay="on"
-                  color="secondary"
-                />
-              </Grid>
+            <Grid item xs={4}>
+              <p style={{ textAlign: "center" }}>
+                <Link
+                  underline="none"
+                  href="https://voracious-scilla-b12.notion.site/ABOUT-PrePreLAW-a0157ff8d9d04e479b7ad885ba27fb46"
+                  target="_blank"
+                >
+                  정보
+                </Link>
+              </p>
             </Grid>
-          </AccordionDetails>
-        </Accordion>
-
-        <Accordion defaultExpanded>
-          <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-            <Typography>학교별 환산 결과</Typography>
-          </AccordionSummary>
-          <AccordionDetails>
-            <Grid container spacing={2}>
-              <SchoolSummary
-                year={year}
-                school="SEOUL"
-                score={hwansan.SEOUL}
-              ></SchoolSummary>
-              <SchoolSummary
-                year={year}
-                school="YONSEI"
-                score={hwansan.YONSEI}
-              ></SchoolSummary>
-              <SchoolSummary
-                year={year}
-                school="KOREA"
-                score={hwansan.KOREA}
-              ></SchoolSummary>
-              <Grid item xs={12}>
-                <p style={{ fontSize: "0.7rem" }}>※ 일반전형 기준</p>
-              </Grid>
+            <Grid item xs={4}>
+              <p style={{ textAlign: "center" }}>
+                <Link underline="none" href="mailto:jinh0park@naver.com">
+                  피드백
+                </Link>
+              </p>
             </Grid>
-          </AccordionDetails>
-        </Accordion>
-
-        <Accordion>
-          <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-            <Typography>학교별 환산 결과 상세</Typography>
-          </AccordionSummary>
-          <AccordionDetails>
-            <Grid container spacing={2}>
-              <SchoolDetail
-                score={hwansan.SEOUL}
-                year={year}
-                school="SEOUL"
-              ></SchoolDetail>
-              <SchoolDetail
-                score={hwansan.YONSEI}
-                year={year}
-                school="YONSEI"
-              ></SchoolDetail>
-              <SchoolDetail
-                score={hwansan.KOREA}
-                year={year}
-                school="KOREA"
-              ></SchoolDetail>
-            </Grid>
-          </AccordionDetails>
-        </Accordion>
-
-        <Grid container justifyContent="center" alignItems="flex-end">
-          <Grid item xs={4}>
-            <p style={{ textAlign: "center" }}>
-              <Link
-                underline="none"
-                href="https://jinh0park.github.io"
-                target="_blank"
-              >
-                만든이
-              </Link>
-            </p>
-          </Grid>
-          <Grid item xs={4}>
-            <p style={{ textAlign: "center" }}>
-              <Link
-                underline="none"
-                href="https://voracious-scilla-b12.notion.site/ABOUT-PrePreLAW-a0157ff8d9d04e479b7ad885ba27fb46"
-                target="_blank"
-              >
-                정보
-              </Link>
-            </p>
-          </Grid>
-          <Grid item xs={4}>
-            <p style={{ textAlign: "center" }}>
-              <Link underline="none" href="mailto:jinh0park@naver.com">
-                피드백
-              </Link>
-            </p>
           </Grid>
         </Grid>
       </Container>
