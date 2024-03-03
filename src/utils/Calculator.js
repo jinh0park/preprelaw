@@ -86,7 +86,7 @@ export const Calculator = ({ year, school, data }) => {
         if (chuPer >= 88) {
           cs = 120 - 0.3 * (100 - chuPer);
         } else if (chuPer >= 56) {
-          cs = 120 - 0.3 * (100 - 88) - 0.27 * (88 - chuPer);
+          cs = 120 - 0.3 * (100 - 88) - 0.4 * (88 - chuPer);
         } else {
           cs = 120 - 0.3 * (100 - 88) - 0.4 * (88 - 56) - 1 * (56 - chuPer);
         }
@@ -126,7 +126,7 @@ export const Calculator = ({ year, school, data }) => {
               return 200 - 0.7 * (100 - gpa);
             } else if (gpa >= 78) {
               return 200 - 0.7 * (100 - 82.9) - 6 * (82.9 - gpa);
-            } else if (gpa >= 87) {
+            } else if (gpa >= 73) {
               return (
                 200 - 0.4 * (100 - 82.9) - 6 * (82.9 - 78) - 8 * (78 - gpa)
               );
