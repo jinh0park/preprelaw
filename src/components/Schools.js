@@ -13,7 +13,7 @@ import Typography from "@mui/material/Typography";
 
 const scaleQ = (x, data, index) => {
   if (x < data.q1[index]) {
-    return (0.25 * (x - 0)) / (data.q1[index] - 0);
+    return (0.25 * (x - data.q0[index])) / (data.q1[index] - data.q0[index]);
   } else if (x < data.q2[index]) {
     return (
       0.25 + (0.25 * (x - data.q1[index])) / (data.q2[index] - data.q1[index])
@@ -31,7 +31,7 @@ const scaleQ = (x, data, index) => {
 
 const reverseScaleQ = (q, data, index) => {
   if (q < 0.25) {
-    return (q * (data.q1[index] - 0)) / 0.25;
+    return (q * (data.q1[index] - data.q0[index])) / 0.25 + data.q0[index];
   } else if (q < 0.5) {
     return (
       ((q - 0.25) * (data.q2[index] - data.q1[index])) / 0.25 + data.q1[index]
