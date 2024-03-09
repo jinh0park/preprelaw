@@ -11,7 +11,7 @@ import AccordionDetails from "@mui/material/AccordionDetails";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
-import { SchoolDetail, SchoolSummary } from "./components/Schools";
+import Schools from "./components/Schools";
 import NativeSelect from "@mui/material/NativeSelect";
 import InputLabel from "@mui/material/InputLabel";
 import Link from "@mui/material/Link";
@@ -70,6 +70,8 @@ function App() {
       chuPer: _chuPer,
       chuScore: _chuScore,
     };
+
+    // 학교 설정 시작
     setHwansan({
       SEOUL: Calculator({
         year: year,
@@ -88,6 +90,9 @@ function App() {
       }),
     });
   }, [eonN, chuN, gpa, year]);
+  const schoolList = ["SEOUL", "YONSEI", "KOREA"];
+  // 학교 설정 끝
+
   const onChange = (e) => {
     const { name, value } = e.target;
 
@@ -248,58 +253,7 @@ function App() {
             </Accordion>
           </Grid>
           <Grid item xs={12} md={6}>
-            <Accordion defaultExpanded>
-              <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-                <Typography>학교별 환산 결과</Typography>
-              </AccordionSummary>
-              <AccordionDetails>
-                <Grid container spacing={2}>
-                  <SchoolSummary
-                    year={year}
-                    school="SEOUL"
-                    score={hwansan.SEOUL}
-                  ></SchoolSummary>
-                  <SchoolSummary
-                    year={year}
-                    school="YONSEI"
-                    score={hwansan.YONSEI}
-                  ></SchoolSummary>
-                  <SchoolSummary
-                    year={year}
-                    school="KOREA"
-                    score={hwansan.KOREA}
-                  ></SchoolSummary>
-                  <Grid item xs={12}>
-                    <p style={{ fontSize: "0.7rem" }}>※ 일반전형 기준</p>
-                  </Grid>
-                </Grid>
-              </AccordionDetails>
-            </Accordion>
-
-            <Accordion>
-              <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-                <Typography>학교별 환산 결과 상세</Typography>
-              </AccordionSummary>
-              <AccordionDetails>
-                <Grid container spacing={2}>
-                  <SchoolDetail
-                    score={hwansan.SEOUL}
-                    year={year}
-                    school="SEOUL"
-                  ></SchoolDetail>
-                  <SchoolDetail
-                    score={hwansan.YONSEI}
-                    year={year}
-                    school="YONSEI"
-                  ></SchoolDetail>
-                  <SchoolDetail
-                    score={hwansan.KOREA}
-                    year={year}
-                    school="KOREA"
-                  ></SchoolDetail>
-                </Grid>
-              </AccordionDetails>
-            </Accordion>
+            <Schools year={year} hwansan={hwansan} schoolList={schoolList} />
           </Grid>
         </Grid>
         <Grid item xs={12}>
