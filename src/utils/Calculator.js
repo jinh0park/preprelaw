@@ -117,6 +117,8 @@ export const Calculator = ({ year, school, data }) => {
           var score = {
             leet: _leet,
             gpa: _gpa,
+            eon: es,
+            chu: cs,
             total: _leet + _gpa,
           };
           return score;
@@ -146,6 +148,8 @@ export const Calculator = ({ year, school, data }) => {
           var score = {
             leet: _leet,
             gpa: _gpa,
+            eon: es,
+            chu: cs,
             total: _leet + _gpa,
           };
           return score;

@@ -23,7 +23,7 @@ const MainContainer = styled.div`
 
 function App() {
   const initialInput = {
-    year: "2023",
+    year: "2024",
     eonN: 20,
     eonPer: 0,
     eonScore: 0,
@@ -104,8 +104,21 @@ function App() {
           <Grid item xs={12}>
             <Grid container alignItems="flex-end">
               <Grid item xs={9}>
-                <h1 style={{ margin: 0, userSelect: "none", color: "#333333" }}>
-                  Pre-Pre-LAW
+                <h1
+                  style={{
+                    margin: 0,
+                    userSelect: "none",
+                    color: "#333333",
+                  }}
+                >
+                  <span
+                    style={{ cursor: "pointer" }}
+                    onClick={() => {
+                      window.location.reload();
+                    }}
+                  >
+                    Pre-Pre-LAW
+                  </span>
                 </h1>
               </Grid>
               <Grid item xs={3} textAlign="right">
