@@ -22,6 +22,9 @@ const MainContainer = styled.div`
 `;
 
 function App() {
+  // 관리되는 state 3개 : {inputs, hwansan, schoolList}
+
+  // 1. inputs state
   const initialInput = {
     year: "2024",
     eonN: 20,
@@ -48,7 +51,13 @@ function App() {
     gpa,
   } = inputs;
 
+  // 2. hwansan state
   const [hwansan, setHwansan] = useState({});
+
+  // 3. schoolList state
+  const initialSchoolList = ["SEOUL", "YONSEI", "KOREA", "SKKU", "HYU"];
+  // eslint-disable-next-line
+  const [schoolList, setSchoolList] = useState(initialSchoolList);
 
   useEffect(() => {
     const [_eonPer, _eonScore] = NtoPerScore(year, "eon", eonN);
@@ -63,6 +72,7 @@ function App() {
       eonNMin: NMin(year, "eon"),
       chuNMin: NMin(year, "chu"),
     }));
+
     const hwansanData = {
       gpa: gpa,
       eonPer: _eonPer,
@@ -71,27 +81,17 @@ function App() {
       chuScore: _chuScore,
     };
 
-    // 학교 설정 시작
-    setHwansan({
-      SEOUL: Calculator({
-        year: year,
-        school: "SEOUL",
-        data: hwansanData,
-      }),
-      YONSEI: Calculator({
-        year: year,
-        school: "YONSEI",
-        data: hwansanData,
-      }),
-      KOREA: Calculator({
-        year: year,
-        school: "KOREA",
-        data: hwansanData,
-      }),
-    });
-  }, [eonN, chuN, gpa, year]);
-  const schoolList = ["SEOUL", "YONSEI", "KOREA"];
-  // 학교 설정 끝
+    schoolList.map((school) =>
+      setHwansan((hw) => ({
+        ...hw,
+        [school]: Calculator({
+          year: year,
+          school: school,
+          data: hwansanData,
+        }),
+      }))
+    );
+  }, [eonN, chuN, gpa, year, schoolList]);
 
   const onChange = (e) => {
     const { name, value } = e.target;

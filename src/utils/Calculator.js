@@ -1,5 +1,6 @@
+//import { ScoreOutlined } from "@material-ui/icons";
 export const Calculator = ({ year, school, data }) => {
-  var { gpa, eonPer, chuPer, eonScore, chuScore } = data;
+  let { gpa, eonPer, chuPer, eonScore, chuScore } = data;
   [gpa, eonPer, chuPer, eonScore, chuScore] = [
     gpa,
     eonPer,
@@ -7,17 +8,15 @@ export const Calculator = ({ year, school, data }) => {
     eonScore,
     chuScore,
   ].map((x) => Number(x));
+  const score = {};
+  let f1, f2, es, cs;
 
   // GPA 최소 85 이상
   switch (school) {
     case "SEOUL":
-      var _gpa = 0.6 * gpa;
-      var _leet = 0.6 * (eonPer * 0.4 + chuPer * 0.6);
-      var score = {
-        leet: _leet,
-        gpa: _gpa,
-        total: _leet + _gpa,
-      };
+      score.gpa = 0.6 * gpa;
+      score.leet = 0.6 * (eonPer * 0.4 + chuPer * 0.6);
+      score.total = score.gpa + score.leet;
       switch (year) {
         case "2024":
           return score;
@@ -27,7 +26,7 @@ export const Calculator = ({ year, school, data }) => {
           return;
       }
     case "YONSEI":
-      var f1 = (leetScore) => {
+      f1 = (leetScore) => {
         const delta = Math.max(168 - leetScore, 0);
         if (delta <= 33) {
           return 150 - 0.3 * delta;
@@ -49,20 +48,16 @@ export const Calculator = ({ year, school, data }) => {
           return 122 - 3 * (73 - 64) - 4.5 * (delta - 73);
         }
       };
-      var f2 = (gpa) => {
+      f2 = (gpa) => {
         if (gpa >= 70) {
           return 150 - (100 - gpa);
         } else {
           return 0;
         }
       };
-      var _leet = f1(Math.round(eonScore + chuScore));
-      var _gpa = f2(gpa);
-      var score = {
-        leet: _leet,
-        gpa: _gpa,
-        total: _leet + _gpa,
-      };
+      score.leet = f1(Math.round(eonScore + chuScore));
+      score.gpa = f2(gpa);
+      score.total = score.leet + score.gpa;
       switch (year) {
         case "2024":
           return score;
@@ -72,9 +67,7 @@ export const Calculator = ({ year, school, data }) => {
           return;
       }
     case "KOREA":
-      var es = 0;
-      var cs = 0;
-      var f1 = (eonPer, chuPer) => {
+      f1 = (eonPer, chuPer) => {
         if (eonPer >= 88) {
           es = 80 - 0.2 * (100 - eonPer);
         } else if (eonPer >= 56) {
@@ -94,7 +87,7 @@ export const Calculator = ({ year, school, data }) => {
       };
       switch (year) {
         case "2024":
-          var f2 = (gpa) => {
+          f2 = (gpa) => {
             if (gpa >= 92) {
               return 150 - 0.4 * (100 - gpa);
             } else if (gpa >= 90) {
@@ -111,19 +104,15 @@ export const Calculator = ({ year, school, data }) => {
               );
             }
           };
-          var { es, cs } = f1(Math.floor(eonPer), Math.floor(chuPer));
-          var _leet = es + cs;
-          var _gpa = f2(gpa);
-          var score = {
-            leet: _leet,
-            gpa: _gpa,
-            eon: es,
-            chu: cs,
-            total: _leet + _gpa,
-          };
+          score.tmp = f1(Math.floor(eonPer), Math.floor(chuPer));
+          score.leet = score.tmp.es + score.tmp.cs;
+          score.gpa = f2(gpa);
+          score.total = score.leet + score.gpa;
+          score.eon = score.tmp.es;
+          score.chu = score.tmp.cs;
           return score;
         case "2023":
-          var f2 = (gpa) => {
+          f2 = (gpa) => {
             if (gpa >= 82.9) {
               return 200 - 0.7 * (100 - gpa);
             } else if (gpa >= 78) {
@@ -142,20 +131,51 @@ export const Calculator = ({ year, school, data }) => {
               );
             }
           };
-          var { es, cs } = f1(Math.floor(eonPer), Math.floor(chuPer));
-          var _leet = es + cs;
-          var _gpa = f2(gpa);
-          var score = {
-            leet: _leet,
-            gpa: _gpa,
-            eon: es,
-            chu: cs,
-            total: _leet + _gpa,
-          };
+          score.tmp = f1(Math.floor(eonPer), Math.floor(chuPer));
+          score.leet = score.tmp.es + score.tmp.cs;
+          score.gpa = f2(gpa);
+          score.total = score.leet + score.gpa;
+          score.eon = score.tmp.es;
+          score.chu = score.tmp.cs;
           return score;
         default:
           return;
       }
+
+    case "SKKU":
+      score.leet =
+        30 - 0.15 * (170 - Math.min(170, parseInt(eonScore + chuScore)));
+      score.gpa = 30 - 0.18 * (100 - gpa);
+      score.total = score.leet + score.gpa;
+      switch (year) {
+        case "2024":
+          return score;
+        case "2023":
+          return score;
+        default:
+          return;
+      }
+
+    case "HYU":
+      score.gpa = 6 + 0.35 * (gpa - 60);
+      score.leet = ((es, cs) => {
+        const A = es / 80.9;
+        const B = cs / 97.5;
+        const C = (A + B) / 2;
+        if (C >= 0.95) return 40;
+        else if (C >= 0.45) return 12 + (C - 0.45) * 56;
+        else return 12;
+      })(eonScore, chuScore);
+      score.total = score.leet + score.gpa;
+      switch (year) {
+        case "2024":
+          return score;
+        case "2023":
+          return score;
+        default:
+          return;
+      }
+
     default:
       return;
   }

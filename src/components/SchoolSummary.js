@@ -17,6 +17,12 @@ const theme = createTheme({
     KOREA: {
       main: "#8B0028",
     },
+    SKKU: {
+      main: "#8DC53F",
+    },
+    HYU: {
+      main: "#124B84",
+    },
 
     tonalOffset: 0.5,
   },
