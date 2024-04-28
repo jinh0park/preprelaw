@@ -16,14 +16,17 @@ const Schools = ({ year, hwansan, schoolList }) => {
         </AccordionSummary>
         <AccordionDetails>
           <Grid container spacing={2}>
-            {schoolList.map((school, i) => (
-              <SchoolSummary
-                key={i}
-                year={year}
-                school={school}
-                score={hwansan[school]}
-              ></SchoolSummary>
-            ))}
+            {schoolList.map(
+              (school, i) =>
+                school.visible && (
+                  <SchoolSummary
+                    key={i}
+                    year={year}
+                    school={school.name}
+                    score={hwansan[school.name]}
+                  ></SchoolSummary>
+                )
+            )}
             <Grid item xs={12}>
               <p style={{ fontSize: "0.7rem" }}>※ 일반전형 기준</p>
             </Grid>
@@ -37,14 +40,17 @@ const Schools = ({ year, hwansan, schoolList }) => {
         </AccordionSummary>
         <AccordionDetails>
           <Grid container spacing={2}>
-            {schoolList.map((school, i) => (
-              <SchoolDetail
-                key={i}
-                year={year}
-                school={school}
-                score={hwansan[school]}
-              ></SchoolDetail>
-            ))}
+            {schoolList.map(
+              (school, i) =>
+                school.visible && (
+                  <SchoolDetail
+                    key={i}
+                    year={year}
+                    school={school.name}
+                    score={hwansan[school.name]}
+                  ></SchoolDetail>
+                )
+            )}
           </Grid>
         </AccordionDetails>
       </Accordion>

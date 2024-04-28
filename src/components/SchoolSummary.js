@@ -6,7 +6,7 @@ import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 
-const theme = createTheme({
+export const schoolTheme = createTheme({
   palette: {
     SEOUL: {
       main: "#0f0f70",
@@ -22,6 +22,9 @@ const theme = createTheme({
     },
     HYU: {
       main: "#124B84",
+    },
+    EWHA: {
+      main: "#00664F",
     },
 
     tonalOffset: 0.5,
@@ -69,7 +72,7 @@ const SchoolSummary = ({ year, school, score }) => {
   if (!score) return;
 
   return (
-    <ThemeProvider theme={theme}>
+    <ThemeProvider theme={schoolTheme}>
       <Grid item xs={12}>
         <Card>
           <CardContent>

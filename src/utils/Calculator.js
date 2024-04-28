@@ -176,6 +176,18 @@ export const Calculator = ({ year, school, data }) => {
           return;
       }
 
+    case "EWHA":
+      score.gpa = gpa * 0.4;
+      score.leet = Math.min(70, (eonScore + chuScore) * 0.7 - 30);
+      switch (year) {
+        case "2024":
+          return score;
+        case "2023":
+          return score;
+        default:
+          return;
+      }
+
     default:
       return;
   }

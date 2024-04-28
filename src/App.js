@@ -15,6 +15,10 @@ import Schools from "./components/Schools";
 import NativeSelect from "@mui/material/NativeSelect";
 import InputLabel from "@mui/material/InputLabel";
 import Link from "@mui/material/Link";
+import Checkbox from "@mui/material/Checkbox";
+import { schoolTheme } from "./components/SchoolSummary";
+import { ThemeProvider } from "@mui/material/styles";
+
 import "./App.css";
 
 const MainContainer = styled.div`
@@ -55,7 +59,14 @@ function App() {
   const [hwansan, setHwansan] = useState({});
 
   // 3. schoolList state
-  const initialSchoolList = ["SEOUL", "YONSEI", "KOREA", "SKKU", "HYU"];
+  const initialSchoolList = [
+    { id: 1, name: "SEOUL", visible: true, verboseName: "서울대" },
+    { id: 2, name: "YONSEI", visible: true, verboseName: "연세대" },
+    { id: 3, name: "KOREA", visible: true, verboseName: "고려대" },
+    { id: 4, name: "SKKU", visible: true, verboseName: "성균관대" },
+    { id: 5, name: "HYU", visible: true, verboseName: "한양대" },
+    { id: 6, name: "EWHA", visible: true, verboseName: "이화여대" },
+  ];
   // eslint-disable-next-line
   const [schoolList, setSchoolList] = useState(initialSchoolList);
 
@@ -84,9 +95,9 @@ function App() {
     schoolList.map((school) =>
       setHwansan((hw) => ({
         ...hw,
-        [school]: Calculator({
+        [school.name]: Calculator({
           year: year,
-          school: school,
+          school: school.name,
           data: hwansanData,
         }),
       }))
@@ -250,6 +261,35 @@ function App() {
                   </Grid>
                 </Grid>
               </AccordionDetails>
+            </Accordion>
+            <Accordion>
+              <AccordionSummary expandIcon={<ExpandMoreIcon />}>
+                <Typography>학교 선택</Typography>
+              </AccordionSummary>
+              <ThemeProvider theme={schoolTheme}>
+                <AccordionDetails>
+                  <Grid container spacing={0}>
+                    {schoolList.map((school) => (
+                      <Grid item xs={4} id={school.id}>
+                        <Checkbox
+                          checked={school.visible}
+                          color={school.name}
+                          onClick={(id) => {
+                            setSchoolList(
+                              schoolList.map((s) =>
+                                s.id === school.id
+                                  ? { ...s, visible: !s.visible }
+                                  : s
+                              )
+                            );
+                          }}
+                        ></Checkbox>
+                        {school.verboseName}
+                      </Grid>
+                    ))}
+                  </Grid>
+                </AccordionDetails>
+              </ThemeProvider>
             </Accordion>
           </Grid>
           <Grid item xs={12} md={6}>
